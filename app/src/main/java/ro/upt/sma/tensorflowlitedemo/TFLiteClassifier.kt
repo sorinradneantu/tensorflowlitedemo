@@ -25,7 +25,8 @@ class TFLiteClassifier(private val inputSize: Int) : Classifier {
     private lateinit var interpreter: Interpreter
     private lateinit var labelList: List<String>
 
-    private val byteBuffer = ByteBuffer.allocateDirect(BATCH_SIZE * inputSize * inputSize * PIXEL_SIZE)
+    private val byteBuffer =
+        ByteBuffer.allocateDirect(BATCH_SIZE * inputSize * inputSize * PIXEL_SIZE)
 
     init {
         byteBuffer.order(ByteOrder.nativeOrder())
@@ -49,10 +50,10 @@ class TFLiteClassifier(private val inputSize: Int) : Classifier {
     }
 
     override fun recognize(bitmap: Bitmap): List<Recognition> {
-        // TODO 4: Step one is to convert the bitmap to a byte array.
+        // TODO 4: Step one is to convert the bitmap to a byte buffer.
 
         val result = Array(1) { ByteArray(labelList.size) }
-        // TODO 5: Step two will run the interpreter using the bytebuffer as input and use the result to return the output.
+        // TODO 5: Step two will run the interpreter using the byte buffer as input and use the 'result' variable to return the output.
 
         // TODO 6: Last step is to return the result in a sorted order.
 

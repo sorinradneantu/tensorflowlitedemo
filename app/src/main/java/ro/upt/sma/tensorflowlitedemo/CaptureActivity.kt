@@ -37,7 +37,7 @@ class CaptureActivity : AppCompatActivity() {
             view = cmv_camera_preview
         )
 
-        cmv_camera_preview.setOnClickListener {view ->
+        cmv_camera_preview.setOnClickListener { view ->
             GlobalScope.launch((Dispatchers.Default)) {
                 val bitmap = fotoapparat.takePicture().toBitmap().await().bitmap
 
@@ -46,14 +46,18 @@ class CaptureActivity : AppCompatActivity() {
                 // TODO 2: Run the recognizer which will return the recognitions.
 
                 withContext(Dispatchers.Main) {
-                    // TODO 3: Show the recognitions using the traditional Toast. Make use of joinToString method to concat multiple items.
+                    // TODO 3: Show the recognitions using the common Toast widget. Make use of joinToString method to concat multiple items.
 
                 }
 
             }
         }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 123)
         }
 
@@ -62,7 +66,11 @@ class CaptureActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             fotoapparat.start()
         }
     }
