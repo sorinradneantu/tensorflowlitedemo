@@ -17,11 +17,6 @@ import kotlinx.coroutines.withContext
 
 class CaptureActivity : AppCompatActivity() {
 
-    private val MODEL_PATH = "mobilenet_v1_0.5_224_quant.tflite"
-    private val LABEL_PATH = "labels_mobilenet_quant_v1_224.txt"
-
-    private val INPUT_SIZE = 224
-
     private lateinit var classifier: Classifier
 
     private lateinit var fotoapparat: Fotoapparat
@@ -30,16 +25,19 @@ class CaptureActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_capture)
 
-        classifier = TFLiteClassifier.create(assets, MODEL_PATH, LABEL_PATH, INPUT_SIZE)
+        classifier = TFLiteClassifier.create(
+            assets, Companion.MODEL_PATH,
+            Companion.LABEL_PATH, Companion.INPUT_SIZE
+        )
 
         fotoapparat = Fotoapparat(
             context = this,
             view = cmv_camera_preview
         )
 
-        cmv_camera_preview.setOnClickListener { view ->
+        cmv_camera_preview.setOnClickListener { _ ->
             GlobalScope.launch((Dispatchers.Default)) {
-                val bitmap = fotoapparat.takePicture().toBitmap().await().bitmap
+                val bitmap: Bitmap = fotoapparat.takePicture().toBitmap().await().bitmap
 
                 // TODO 1: Rescale the bitmap to INPUT_SIZE width and height using the Bitmap.createScaledBitmap method.
 
@@ -79,6 +77,12 @@ class CaptureActivity : AppCompatActivity() {
         super.onPause()
 
         fotoapparat.stop()
+    }
+
+    companion object {
+        private const val MODEL_PATH = "mobilenet_v1_0.5_224_quant.tflite"
+        private const val LABEL_PATH = "labels_mobilenet_quant_v1_224.txt"
+        private const val INPUT_SIZE = 224
     }
 
 }

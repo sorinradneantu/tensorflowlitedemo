@@ -1,3 +1,3 @@
 <resources>
-    <string name="app_name">TensorFlowLiteDemo</string>
+    <string name="app_name">TfLite Object Recognizer</string>
 </resources>
