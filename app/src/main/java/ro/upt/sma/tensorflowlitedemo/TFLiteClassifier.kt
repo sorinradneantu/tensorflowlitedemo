@@ -17,11 +17,6 @@ import kotlin.experimental.and
 
 class TFLiteClassifier(private val inputSize: Int) : Classifier {
 
-    private val MAX_RESULTS = 5
-    private val BATCH_SIZE = 1
-    private val PIXEL_SIZE = 3
-    private val THRESHOLD = 0.1f
-
     private lateinit var interpreter: Interpreter
     private lateinit var labelList: List<String>
 
@@ -47,6 +42,11 @@ class TFLiteClassifier(private val inputSize: Int) : Classifier {
 
             return classifier
         }
+
+        private const val MAX_RESULTS = 5
+        private const val BATCH_SIZE = 1
+        private const val PIXEL_SIZE = 3
+        private const val THRESHOLD = 0.1f
     }
 
     override fun recognize(bitmap: Bitmap): List<Recognition> {
