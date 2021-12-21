@@ -50,14 +50,18 @@ class TFLiteClassifier(private val inputSize: Int) : Classifier {
     }
 
     override fun recognize(bitmap: Bitmap): List<Recognition> {
-        // TODO 4: Step one is to convert the bitmap to a byte buffer.
+        // Step one is to convert the bitmap to a byte buffer.
+        val bitmapToByteBuffer = convertBitmapToByteBuffer(bitmap);
 
         val result = Array(1) { ByteArray(labelList.size) }
-        // TODO 5: Step two will run the interpreter using the byte buffer as input and use the 'result' variable to return the output.
 
-        // TODO 6: Last step is to return the result in a sorted order.
+        // Step two will run the interpreter using the byte buffer as input and use the 'result' variable to return the output.
+        interpreter.run(bitmapToByteBuffer, result);
 
-        return emptyList()
+        // Last step is to return the result in a sorted order.
+        return getSortedResult(result);
+
+        return emptyList() // can be deleted
     }
 
     @Throws(IOException::class)
