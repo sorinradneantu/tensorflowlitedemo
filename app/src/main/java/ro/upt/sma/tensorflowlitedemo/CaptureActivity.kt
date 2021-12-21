@@ -39,13 +39,17 @@ class CaptureActivity : AppCompatActivity() {
             GlobalScope.launch((Dispatchers.Default)) {
                 val bitmap: Bitmap = fotoapparat.takePicture().toBitmap().await().bitmap
 
-                // TODO 1: Rescale the bitmap to INPUT_SIZE width and height using the Bitmap.createScaledBitmap method.
-
-                // TODO 2: Run the recognizer which will return the recognitions.
-
+                // Rescale the bitmap to INPUT_SIZE width and height using the Bitmap.createScaledBitmap method.
+                val newBitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
+                // Run the recognizer which will return the recognitions.
+                val rec = classifier.recognize(newBitmap);
                 withContext(Dispatchers.Main) {
-                    // TODO 3: Show the recognitions using the common Toast widget. Make use of joinToString method to concat multiple items.
-
+                    // Show the recognitions using the common Toast widget. Make use of joinToString method to concat multiple items.
+                    val showRec = rec.joinToString {
+                            rec ->
+                        rec.label + " " + rec.confidence;
+                    }
+                    Toast.makeText(applicationContext, showRec, Toast.LENGTH_LONG).show();
                 }
 
             }
